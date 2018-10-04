@@ -31,11 +31,14 @@ if [ "$SCENARIO" = 'deploy' ]; then
     env
     echo '---------------------------------------------------'
     cd $APP_PATH
-    php .app/console cache:clear –env $APP_ENV
+    rm -rf app/cache/*
+    #php ./app/console cache:clear –-env $APP_ENV
     cp $APP_PATH/app/config/parameters.yml.dist $APP_PATH/app/config/parameters.yml.dist.back
     cp $APP_PATH/app/config/parameters.yml $APP_PATH/app/config/parameters.yml.dist
     php ./app/console oro:install --env=$APP_ENV --timeout=900 --no-debug --application-url="$APP_URL" \
     --organization-name "$APP_ORG" --user-name="$APP_LOGIN" --user-email="$APP_MAIL" --user-firstname="$APP_UFN" --user-lastname="$APP_ULN" --user-password="$APP_PASS" --sample-data=$APP_DEMO
+    #php app/console cache:warmup --env=$APP_ENV
+    exit 0
  fi
 
 if [ "$SCENARIO" = 'run' ]; then
